@@ -1,0 +1,41 @@
+class parenthesischecker:
+    def _init_(self):
+        self.stack=[]
+    def push(self,char):
+        self.stack.append(char)
+    def pop(self):
+        return self.stack.pop()
+    def match(self,temp,char):
+        if temp=='(' and char==')':
+            return True
+        if temp=='{' and char=='}':
+            return True
+        if temp=='[' and char==']':
+            return True
+        return False
+    def check(self,exp):
+        for char in exp:
+            if char in '({[':
+                self.push(char)
+            elif char in ')}]':
+                if not self.stack:
+                    print("right parenthesis is more than left")
+                    return False
+            else:
+                temp=self.pop()
+                if not self.match(temp,char):
+                    print("mismatched parenthesis")
+                    return False
+        if self.stack:
+            print("left parenthesis are more than right")
+            return False
+        else:
+            print("balanced")
+            return True
+checker=parenthesischecker()
+exp=input("enter an expression")
+valid=checker.check(exp)
+if valid:
+    print("expression is balanced")
+else:
+    print("expression is unbalanced")
